@@ -551,6 +551,63 @@ b = np.array([10, 20, 30])      # 1D array to broadcast across rows
 print("Broadcasted Add:\n", a + b)  # Element-wise addition using broadcasting
 
 # --------------------------
+# Load text file as raw object array
+# --------------------------
+
+data = np.loadtxt(r"D:\ad.txt", dtype='object')
+
+# Reads the entire file into a NumPy array of Python objects (default delimiter is whitespace)
+# If the file contains multiple types of data (strings, numbers), this preserves them as objects.
+
+# --------------------------
+# Load CSV file as object array
+# --------------------------
+
+data1 = np.loadtxt(r"D:\ad.txt", dtype='object', delimiter=",")
+
+# Reads the file assuming comma-separated values
+# Each entry is stored as a Python object
+
+# --------------------------
+# Unpack columns into separate arrays
+# --------------------------
+
+data2, data3 = np.loadtxt(r"D:\ad.txt", dtype='object', delimiter=",", unpack=True)
+
+# `unpack=True` splits columns into separate arrays
+# data2 contains all values from column 1, data3 contains all values from column 2
+
+# --------------------------
+# Skip the first row (header) and unpack columns
+# --------------------------
+
+data4, data5 = np.loadtxt(r"D:\ad.txt", dtype='object', delimiter=",", unpack=True, skiprows=1)
+
+# Skips first row (often headers in CSV files)
+# Returns remaining columns separately
+
+# --------------------------
+# Using genfromtxt for more robust reading
+# --------------------------
+
+data6 = np.genfromtxt(r"D:\ad.txt", delimiter=",", dtype=None)
+
+# Reads CSV file with automatic type inference (strings, numbers, etc.)
+# Can handle missing values better than loadtxt
+
+# --------------------------
+# Print results
+# --------------------------
+
+print(data)
+print(data1)
+print(data2)
+print(data3)
+print(data4)
+print(data5)
+print(data6)
+
+# --------------------------
 # Masked arrays
 # --------------------------
 arr = np.array([1, 2, 3, -999, 5])  # Original array with invalid value -999
