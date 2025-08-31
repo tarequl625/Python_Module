@@ -47,3 +47,17 @@ print("random number with range using randrange:", randomNumber)   # e.g., 16
 random.seed(int(input("Enter a seed number : ")))  # If you enter 5
 randomNumber = random.randint(10,20)
 print("seed funcion use for same random output: ", randomNumber)   # Always same for given seed, e.g., 14
+
+#Values closer to 15 are more likely than closer to 10 or 20.
+tri_random = random.triangular(10, 20, 15)  # low=10, high=20, mode=15
+print("7) Triangular distribution:", tri_random)
+
+#"Green" has the highest chance (50%), so it will appear most often.
+colors = ["Red", "Blue", "Green", "Yellow"]
+randomColor = random.choices(colors, weights=[0.1, 0.2, 0.5, 0.2], k=1)
+print("1) Random choice with weights:", randomColor)
+
+#Picks 3 unique characters from the string.
+letters = "ABCDE"
+random_letters = random.sample(letters, 3)
+print("2) Sample from string:", random_letters)

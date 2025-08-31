@@ -123,6 +123,21 @@ for i, d in np.ndenumerate(array_3):
 # (1,1,1) 7
 
 # --------------------------
+# Vectorize functions
+# --------------------------
+
+# Array of names
+names = np.array(['Jim', 'Luke', 'Josh', 'Pete'])
+
+# Use vectorize to apply a function to each element
+# Function: get the first character of each name
+first_letter_j = np.vectorize(lambda s: s[0])(names) == 'J'
+# show index number that start with 'J'
+print(np.where(np.char.startswith(na, 'J')))
+# Use boolean indexing to select names that start with 'J'
+print(names[first_letter_j])
+
+# --------------------------
 # Array creation functions
 # --------------------------
 var1 = "Hello"
@@ -228,6 +243,45 @@ print(var2[0][0:1])
 
 print(var2[::2])  
 # Take every other element along the first axis (only first block in this case)
+
+# ------------------------------
+# Advanced Slicing Tricks
+# ------------------------------
+
+# 1. All rows, only 2nd column
+print("var1[0, :, 1]     :", var1[0, :, 1])    # [2, 5, 8]
+
+# 2. Last row reversed
+print("var1[0, -1, ::-1] :", var1[0, -1, ::-1])  # [9, 8, 7]
+
+# 3. Diagonal elements (row=col)
+print("Diagonal var1     :", var1[0, range(3), range(3)])  # [1, 5, 9]
+
+# 4. Every alternate column
+print("var2[0, :, ::2]   :\n", var2[0, :, ::2])
+# [[11 13]
+#  [14 16]
+#  [17 19]]
+
+# 5. Fancy indexing (specific elements)
+print("var2 fancy        :", var2[0, [0, 2], [1, 2]])  # [12, 19]
+
+# 6. Entire block but reversed rows
+print("var1 reversed rows:\n", var1[0, ::-1])
+# [[7 8 9]
+#  [4 5 6]
+#  [1 2 3]]
+
+# 7. Entire block but reversed cols
+print("var2 reversed cols:\n", var2[0, :, ::-1])
+# [[13 12 11]
+#  [16 15 14]
+#  [19 18 17]]
+
+# 8. Select sub-matrix (first 2 rows, last 2 cols)
+print("Sub-matrix var1   :\n", var1[0, 0:2, 1:3])
+# [[2 3]
+#  [5 6]]
 
 # --------------------------
 # Concatenation & stacking
@@ -340,6 +394,11 @@ print(np.unique(var1, return_index=True, return_counts=True))
 # --------------------------
 
 arr = np.array([10, 20, 30, 40, 50])
+arr2 = np.array([20,30,40,50,60])
+
+print(np.gradient(y,x))
+
+print("Range (Peak to Peak):", np.ptp(arr))  # Max - Min
 
 print("Mean:", np.mean(arr))  # Average of elements
 
@@ -354,6 +413,12 @@ print("Sum:", np.sum(arr))  # Sum of all elements
 print("Cumulative Sum:", np.cumsum(arr))  # Running total
 
 print("Product:", np.prod(arr))  # Product of all elements
+
+print("25th Percentile (Q1):", np.percentile(arr, 25))  # First quartile
+
+print("Covariance Matrix (self with self):", np.cov(arr))  # Covariance (needs 2D input usually)
+
+print("Correlation Coefficient:", np.corrcoef(arr, arr2))  # Pearson correlation matrix
 
 # --------------------------
 # Broadcasting
