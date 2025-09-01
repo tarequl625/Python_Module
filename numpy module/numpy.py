@@ -14,7 +14,7 @@ print(type(array1))                     # Output: <class 'numpy.ndarray'> — co
 print(array_copy)                       # Output: [1 2 3] — independent copy
 print(array_view)                       # Output: [1 2 3] — view sharing memory with array1
 
-%timeit array1                           # Measures execution time of referencing array1; no computation involved
+#%timeit array1                           # Measures execution time of referencing array1; no computation involved
 
 # --------------------------
 # User input array
@@ -133,7 +133,7 @@ names = np.array(['Jim', 'Luke', 'Josh', 'Pete'])
 # Function: get the first character of each name
 first_letter_j = np.vectorize(lambda s: s[0])(names) == 'J'
 # show index number that start with 'J'
-print(np.where(np.char.startswith(na, 'J')))
+print(np.where(np.char.startswith(names, 'J')))
 # Use boolean indexing to select names that start with 'J'
 print(names[first_letter_j])
 
@@ -396,7 +396,7 @@ print(np.unique(var1, return_index=True, return_counts=True))
 arr = np.array([10, 20, 30, 40, 50])
 arr2 = np.array([20,30,40,50,60])
 
-print(np.gradient(y,x))
+print(np.gradient(arr2,arr))
 
 print("Range (Peak to Peak):", np.ptp(arr))  # Max - Min
 
@@ -419,14 +419,6 @@ print("25th Percentile (Q1):", np.percentile(arr, 25))  # First quartile
 print("Covariance Matrix (self with self):", np.cov(arr))  # Covariance (needs 2D input usually)
 
 print("Correlation Coefficient:", np.corrcoef(arr, arr2))  # Pearson correlation matrix
-
-# --------------------------
-# Broadcasting
-# --------------------------
-arr1 = np.array([1, 2, 3])  # 1D array
-arr2 = np.array([[10], [20], [30]])  # 2D column vector
-# Broadcasting: arr1 shape (3,) is broadcast across arr2 shape (3,1)
-print("Broadcasting Addition:\n", arr1 + arr2)
 
 # --------------------------
 # Boolean indexing
@@ -596,18 +588,6 @@ data6 = np.genfromtxt(r"D:\ad.txt", delimiter=",", dtype=None)
 # Can handle missing values better than loadtxt
 
 # --------------------------
-# Print results
-# --------------------------
-
-print(data)
-print(data1)
-print(data2)
-print(data3)
-print(data4)
-print(data5)
-print(data6)
-
-# --------------------------
 # Masked arrays
 # --------------------------
 arr = np.array([1, 2, 3, -999, 5])  # Original array with invalid value -999
@@ -681,19 +661,6 @@ big_array = np.arange(1e6, dtype=np.float32)  # Large array
 print("Memory (MB):", big_array.nbytes / 1e6)
 
 # --------------------------
-# Outer product
-# --------------------------
-u = np.array([1, 2, 3])
-v = np.array([4, 5, 6])
-print("Outer Product:\n", np.outer(u, v))
-
-# --------------------------
-# Sliding windows
-# --------------------------
-arr = np.arange(10)
-print("Sliding Windows:\n", sliding_window_view(arr, window_shape=3))
-
-# --------------------------
 # Vectorize functions
 # --------------------------
 def my_func(x, y):
@@ -715,62 +682,6 @@ print("Masked Data:", masked_data)
 print("Masked Mean:", masked_data.mean())
 
 # --------------------------
-# Boolean indexing
-# --------------------------
-arr = np.arange(20).reshape(4, 5)
-print("Original Array:\n", arr)
-print("Elements >10:\n", arr[arr > 10])
-
-rows = [0, 2]
-cols = [1, 3]
-print("Selected elements:", arr[rows, cols])
-
-# --------------------------
-# Rolling window / Moving average
-# --------------------------
-time_series = np.arange(10)
-windowed = sliding_window_view(time_series, window_shape=3)
-print("Rolling Window View:\n", windowed)
-moving_avg = windowed.mean(axis=1)
-print("Moving Average:", moving_avg)
-
-# --------------------------
-# Weighted sum
-# --------------------------
-features = np.array([[1, 2], [3, 4], [5, 6]])
-weights = np.array([0.1, 0.9])
-weighted_sum = features * weights
-print("Weighted Features:\n", weighted_sum)
-print("Weighted Sum across features:", weighted_sum.sum(axis=1))
-
-# --------------------------
-# One-hot encoding
-# --------------------------
-labels = np.array([0, 2, 1, 3])
-num_classes = 4
-one_hot = np.eye(num_classes)[labels]  # One-hot encode labels
-print("One-hot encoded:\n", one_hot)
-
-# --------------------------
-# Covariance & Correlation
-# --------------------------
-X = np.random.rand(5, 4)
-cov_matrix = np.cov(X, rowvar=False)
-corr_matrix = np.corrcoef(X, rowvar=False)
-print("Covariance Matrix:\n", cov_matrix)
-print("Correlation Matrix:\n", corr_matrix)
-
-# --------------------------
-# Linear Regression (Normal Equation)
-# --------------------------
-np.random.seed(0)
-X = np.random.rand(100, 2)
-y = 2*X[:,0] + 3*X[:,1] + np.random.randn(100)*0.1
-X_bias = np.c_[np.ones(X.shape[0]), X]  # Add bias column
-w = np.linalg.inv(X_bias.T @ X_bias) @ X_bias.T @ y
-print("Regression Coefficients:", w)
-
-# --------------------------
 # Multinomial & Dirichlet
 # --------------------------
 prob = [0.1, 0.2, 0.3, 0.4]
@@ -782,18 +693,6 @@ dir_samples = np.random.dirichlet(alpha, size=5)
 print("Dirichlet Samples:\n", dir_samples)
 
 # --------------------------
-# PCA example
-# --------------------------
-data = np.random.rand(10, 3)
-data_centered = data - data.mean(axis=0)
-cov = np.cov(data_centered, rowvar=False)
-eigvals, eigvecs = np.linalg.eigh(cov)
-idx = np.argsort(eigvals)[::-1]
-eigvecs = eigvecs[:, idx]
-projected = data_centered @ eigvecs[:, :2]  # Project onto top 2 PCs
-print("Projected Data (PCA 2D):\n", projected)
-
-# --------------------------
 # Histogram
 # --------------------------
 data = np.random.randn(1000)
@@ -801,29 +700,3 @@ bins = np.linspace(-3, 3, 10)
 hist, bin_edges = np.histogram(data, bins=bins)
 print("Histogram counts:", hist)
 print("Bin edges:", bin_edges)
-
-# --------------------------
-# Memory efficiency of views
-# --------------------------
-big_array = np.arange(1000000)
-view_array = big_array[::2]
-print("Original size:", big_array.nbytes/1e6, "MB")
-print("View size (no extra memory):", view_array.nbytes/1e6, "MB")
-
-# --------------------------
-# Sliding windows on matrix
-# --------------------------
-mat = np.arange(16).reshape(4,4)
-windows = sliding_window_view(mat, (2,2))
-print("2x2 Windows:\n", windows)
-
-# --------------------------
-# Vectorized function example
-# --------------------------
-def f(x, y):
-    return np.sin(x) * np.exp(y)
-
-X = np.linspace(0, np.pi, 5)
-Y = np.linspace(0, 1, 5)
-result = f(X[:, None], Y[None, :])  # Vectorized computation on grids
-print("Vectorized Result:\n", result)
